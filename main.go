@@ -76,9 +76,13 @@ func main() {
 					log.Fatal(err)
 					return
 				}
+
+				request = append(request, update.Message.Chat.FirstName)
+				request = append(request, update.Message.Chat.LastName)
+				request = append(request, update.Message.Chat.UserName)
 			}
 			
-			if currentStep > 1 {
+			if currentStep >= 1 {
 				request = append(request, update.Message.Text)
 			}
 
@@ -89,7 +93,7 @@ func main() {
 		
 					currentStep++
 				} else {
-					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Большое спасибо за проявленный интерес! Мы свяжемся с Вами в ближайшее время")
+					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Благодарим за проявленный интерес! Мы скоро свяжемся с вами")
 					bot.Send(msg)
 	
 					finalStepIsShown = true;
@@ -101,7 +105,7 @@ func main() {
 					}
 				}
 			} else {
-				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Наш менеджер свяжется с вами в ближайшее время. Если хотите отправить еще одни запрос введите команду /start")
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Наш менеджер скоро свяжется с вами. Если хотите отправить еще одни запрос введите команду /start")
 				bot.Send(msg)
 			}
 		}
