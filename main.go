@@ -19,19 +19,19 @@ func main() {
 		return
 	}
 
-	gc, err := services.NewGoogleClient(ctx, cfg.Google.Scope)
+	gc, err := services.NewGoogleClient(ctx, cfg.GoogleCloudConfig, cfg.Scope)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	requestsSheets, err := services.NewRequestsSheets(ctx, gc, cfg.GoogleSheets.Requests.SpreadsheetId, cfg.GoogleSheets.Requests.ReadRange)
+	requestsSheets, err := services.NewRequestsSheets(ctx, gc, cfg.RequestsSpreadsheetId, cfg.RequestsReadRange)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	builderSheets, err := services.NewBuilderSheets(ctx, gc, cfg.GoogleSheets.Builder.SpreadsheetId, cfg.GoogleSheets.Builder.ReadRange)
+	builderSheets, err := services.NewBuilderSheets(ctx, gc, cfg.BuilderSpreadsheetId, cfg.BuilderReadRange)
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -48,7 +48,7 @@ func main() {
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60 * 3
+	u.Timeout = 60
 
 	updates := bot.GetUpdatesChan(u)
 
