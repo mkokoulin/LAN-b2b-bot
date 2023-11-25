@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -26,7 +27,7 @@ type Config struct {
 	BuilderReadRange string `env:"BUILDER_READ_RANGE" json:"BUILDER_READ_RANGE"`
 	RequestsSpreadsheetId string `env:"REQUESTS_SPREADSHEET_ID" json:"REQUESTS_SPREADSHEET_ID"`
 	RequestsReadRange string `env:"REQUESTS_READ_RANGE" json:"REQUESTS_READ_RANGE"`
-	// GoogleCloudConfig GoogleCloudConfig `env:"GOOGLE_CLOUD_CONFIG" json:"GOOGLE_CLOUD_CONFIG"`
+	GoogleCloudConfig GoogleCloudConfig `env:"GOOGLE_CLOUD_CONFIG" json:"GOOGLE_CLOUD_CONFIG"`
 }
 
 func New() (*Config, error) {
@@ -67,17 +68,16 @@ func New() (*Config, error) {
 		return nil, fmt.Errorf("environment variable %v is not set or empty", "REQUESTS_READ_RANGE")
 	}
 
-	// googleCloudConfigString := os.Getenv("GOOGLE_CLOUD_CONFIG")
-	// if googleCloudConfigString == "" {
-	// 	return nil, fmt.Errorf("environment variable %v is not set or empty", "GOOGLE_CLOUD_CONFIG")
-	// }
-	// var googleCloudConfig GoogleCloudConfig
-	// if err := json.Unmarshal([]byte(googleCloudConfigString), &googleCloudConfig); err != nil {
-	// 	return nil, fmt.Errorf("error parsing JSON: %v", err)
-	// }
-	// log.Default().Printf("REQUESTS_SPREADSHEET_ID: %v", cfg.RequestsReadRange)
-	// cfg.GoogleCloudConfig = googleCloudConfig;
-
+	googleCloudConfigString := os.Getenv("GOOGLE_CLOUD_CONFIG")
+	if googleCloudConfigString == "" {
+		return nil, fmt.Errorf("environment variable %v is not set or empty", "GOOGLE_CLOUD_CONFIG")
+	}
+	var googleCloudConfig GoogleCloudConfig
+	if err := json.Unmarshal([]byte(googleCloudConfigString), &googleCloudConfig); err != nil {
+		return nil, fmt.Errorf("error parsing JSON: %v", err)
+	}
+	log.Default().Printf("REQUESTS_SPREADSHEET_ID: %v", cfg.RequestsReadRange)
+	cfg.GoogleCloudConfig = googleCloudConfig;
 
 	return &cfg, nil
 }

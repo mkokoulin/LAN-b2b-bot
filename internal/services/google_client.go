@@ -2,23 +2,20 @@ package services
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"os"
 
 	"golang.org/x/oauth2/google"
+
+	"lan_b2b_bot/internal/config"
 )
 
-func NewGoogleClient(ctx context.Context, scope ...string) (*http.Client, error) {
-	jsonFile, err := os.Open("google-config.json")
+func NewGoogleClient(ctx context.Context, gcc config.GoogleCloudConfig, scope ...string) (*http.Client, error) {
+	byteValue, err := json.Marshal(gcc)
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	defer jsonFile.Close()
-
-	byteValue, _ := io.ReadAll(jsonFile)
 
 	config, err := google.JWTConfigFromJSON(byteValue, scope...)
 	if err != nil {
