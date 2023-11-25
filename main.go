@@ -19,7 +19,7 @@ func main() {
 		return
 	}
 
-	gc, err := services.NewGoogleClient(ctx, cfg.GoogleCloudConfig, cfg.Scope)
+	gc, err := services.NewGoogleClient(ctx, cfg.Scope)
 	if err != nil {
 		log.Fatal(err)
 		return
