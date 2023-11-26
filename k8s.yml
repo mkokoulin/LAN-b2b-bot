@@ -15,9 +15,9 @@ spec:
       containers:
       - name: hello-world
         image: okteto.dev/go-hello-world:1.0.0
-        # env:
-        #   - name: SCOPE
-        #     value: "https://www.googleapis.com/auth/spreadsheets"
+        env:
+          - name: SCOPE
+            value: "https://www.googleapis.com/auth/spreadsheets"
         #   - name: TELEGRAM_TOKEN
         #     value: "6366759286:AAEJhVZuoE-IDFPsKiz1PhBO1QbDyCkzj8w"
         #   - name: BUILDER_SPREADSHEET_ID
