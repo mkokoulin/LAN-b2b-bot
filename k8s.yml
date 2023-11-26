@@ -13,8 +13,23 @@ spec:
         app: hello-world
     spec:
       containers:
-      - image: okteto.dev/go-hello-world:1.0.0
-        name: hello-world
+      - name: hello-world
+        image: okteto.dev/go-hello-world:1.0.0
+        env:
+          - name: SCOPE
+            value: $(SCOPE)
+          - name: TELEGRAM_TOKEN
+            value: $(TELEGRAM_TOKEN)
+          - name: BUILDER_SPREADSHEET_ID
+            value: $(BUILDER_SPREADSHEET_ID)
+          - name: BUILDER_READ_RANGE
+            value: $(BUILDER_READ_RANGE)
+          - name: REQUESTS_SPREADSHEET_ID
+            value: $(REQUESTS_SPREADSHEET_ID)
+          - name: REQUESTS_READ_RANGE
+            value: $(REQUESTS_READ_RANGE)
+          - name: GOOGLE_CLOUD_CONFIG
+            value: $(GOOGLE_CLOUD_CONFIG)
 
 ---
 
