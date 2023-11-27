@@ -5,6 +5,7 @@ import (
 	"lan_b2b_bot/internal/config"
 	"lan_b2b_bot/internal/services"
 	"log"
+	"net/http"
 	"reflect"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -57,6 +58,14 @@ func main() {
 
 	request := []string{}
 	steps := []string{}
+
+	go func() {
+        _ = http.ListenAndServe(":8080", http.HandlerFunc(
+            func(w http.ResponseWriter, r *http.Request) {
+                _, _ = w.Write([]byte("ok"))
+            },
+        ))
+    }()
 
 	for update := range updates {
 		if update.Message == nil {
