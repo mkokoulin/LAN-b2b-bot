@@ -40,33 +40,34 @@ func New() (*Config, error) {
 	log.Default().Printf("[LAN-TG-BOT] SCOPE: %v", cfg.Scope)
 
 	cfg.TelegramToken = os.Getenv("TELEGRAM_TOKEN")
-	if cfg.Scope == "" {
+	if cfg.TelegramToken == "" {
 		return nil, fmt.Errorf("environment variable %v is not set or empty", "TELEGRAM_TOKEN")
 	}
 	log.Default().Printf("[LAN-TG-BOT] TELEGRAM_TOKEN: %v", cfg.TelegramToken)
 
 	cfg.BuilderSpreadsheetId = os.Getenv("BUILDER_SPREADSHEET_ID")
-	if cfg.Scope == "" {
+	if cfg.BuilderSpreadsheetId == "" {
 		return nil, fmt.Errorf("environment variable %v is not set or empty", "BUILDER_SPREADSHEET_ID")
 	}
 	log.Default().Printf("[LAN-TG-BOT] BUILDER_SPREADSHEET_ID: %v", cfg.BuilderSpreadsheetId)
 
 	cfg.BuilderReadRange = os.Getenv("BUILDER_READ_RANGE")
-	if cfg.Scope == "" {
+	if cfg.BuilderReadRange == "" {
 		return nil, fmt.Errorf("environment variable %v is not set or empty", "BUILDER_READ_RANGE")
 	}
 	log.Default().Printf("[LAN-TG-BOT] BUILDER_READ_RANGE: %v", cfg.BuilderReadRange)
 
 	cfg.RequestsSpreadsheetId = os.Getenv("REQUESTS_SPREADSHEET_ID")
-	if cfg.Scope == "" {
+	if cfg.RequestsSpreadsheetId == "" {
 		return nil, fmt.Errorf("environment variable %v is not set or empty", "REQUESTS_SPREADSHEET_ID")
 	}
-	log.Default().Printf("[LAN-TG-BOT] REQUESTS_READ_RANGE: %v", cfg.RequestsSpreadsheetId)
+	log.Default().Printf("[LAN-TG-BOT] REQUESTS_SPREADSHEET_ID: %v", cfg.RequestsSpreadsheetId)
 
 	cfg.RequestsReadRange = os.Getenv("REQUESTS_READ_RANGE")
-	if cfg.Scope == "" {
+	if cfg.RequestsReadRange == "" {
 		return nil, fmt.Errorf("environment variable %v is not set or empty", "REQUESTS_READ_RANGE")
 	}
+	log.Default().Printf("[LAN-TG-BOT] REQUESTS_READ_RANGE: %v", cfg.RequestsSpreadsheetId)
 
 	googleCloudConfigString := os.Getenv("GOOGLE_CLOUD_CONFIG")
 	if googleCloudConfigString == "" {
@@ -76,7 +77,7 @@ func New() (*Config, error) {
 	if err := json.Unmarshal([]byte(googleCloudConfigString), &googleCloudConfig); err != nil {
 		return nil, fmt.Errorf("error parsing JSON: %v", err)
 	}
-	log.Default().Printf("[LAN-TG-BOT] REQUESTS_SPREADSHEET_ID: %v", cfg.RequestsReadRange)
+	log.Default().Printf("[LAN-TG-BOT] GOOGLE_CLOUD_CONFIG: %v", cfg.RequestsReadRange)
 	cfg.GoogleCloudConfig = googleCloudConfig;
 
 	return &cfg, nil

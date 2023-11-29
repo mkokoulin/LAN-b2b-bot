@@ -22,6 +22,5 @@ func NewGoogleClient(ctx context.Context, gcc config.GoogleCloudConfig, scope ..
 		return nil, fmt.Errorf("%v", err)
 	}
 
-	// create client with config and context
 	return config.Client(ctx), nil
 }
